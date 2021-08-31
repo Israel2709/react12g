@@ -25,3 +25,11 @@
 .alto{
   background-color:red !important
 }
+
+.text-bold{
+  font-weight: bold;
+}
+
+.text-red{
+  color:red
+}

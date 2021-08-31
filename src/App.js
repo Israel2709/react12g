@@ -1,40 +1,46 @@
 import React, { Component } from 'react'
 import './App.css';
 
+import CustomHeading from './Components/CustomHeading'
+import CustomList from './Components/CustomList'
+
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      etapa:"",
-      title:"semáforo",
-      color:"",
-      mentors:[""]
+      title: "Hola koders!",
+      listItems: []
     }
-    this.myProp = "some prop"
-    this.setEtapa = this.setEtapa.bind( this )
+    this.changeHandler = this.changeHandler.bind( this )
+    this.saveHandler = this.saveHandler.bind( this )
   }
 
-  setEtapa( event ){
-    const value = event.target.value
-    console.log( value )
-    console.log( this )
-    this.setState({etapa: value})
+  changeHandler(event) {
+    const text = event.target.value
+    this.setState({ title: text })
   }
+
+  saveHandler() {
+    this.setState({
+      listItems: [...this.state.listItems, this.state.title]
+    })
+    
+  }
+
+
   render() {
-    const { title, etapa } = this.state
     return (
       <>
-        <input className="control" type="radio" name="etapa" value="siga" onClick={ this.setEtapa }/>
-        <label for="">Siga</label>
-        <input className="control" type="radio" name="etapa" value="precaucion" onClick={ this.setEtapa }/>
-        <label for="">Precaución</label>
-        <input className="control" type="radio" name="etapa" value="alto" onClick={ this.setEtapa }/>
-        <label for="">Alto</label>
-        <div className="semaforo">
-          <p>{ title }</p>
-          <div className={`luz ${etapa}`}></div>
-        </div>
+        <input type="text" onChange={this.changeHandler} />
+        <button onClick={this.saveHandler}>Guardar</button>
+        {/*<CustomHeading 
+          text = { this.state.title ? this.state.title : "hola koders!"}
+          customClasses = {["text-bold", "text-red"]}
+        />*/}
+        <CustomList 
+          listItems = { this.state.listItems }
+        />
       </>
     )
   }
