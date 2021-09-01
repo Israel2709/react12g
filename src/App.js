@@ -1,40 +1,70 @@
 import React, { Component } from 'react'
-import './App.css';
+import './App.scss';
+
+import { DropDown, Button } from './Components/CTAS'
+
+import {
+  Container,
+  Row,
+  Col,
+} from 'reactstrap'
+
+import UsersTable from './Components/UsersTable';
+import UserForm from './Components/UserForm';
 
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      etapa:"",
-      title:"semáforo",
-      color:"",
-      mentors:[""]
+      usersList: [],
+      userData: {
+        nombre: "Israel",
+        email: "israel@kodemia.mx"
+      }
     }
-    this.myProp = "some prop"
-    this.setEtapa = this.setEtapa.bind( this )
+    this.onChangeHandler = this.onChangeHandler.bind(this)
+    this.saveHandler = this.saveHandler.bind(this)
   }
 
-  setEtapa( event ){
+  onChangeHandler(event) {
+    const property = event.target.name
     const value = event.target.value
-    console.log( value )
-    console.log( this )
-    this.setState({etapa: value})
+    console.log(property + " : " + value)
+    this.setState({ userData: { ...this.state.userData, [property]: value } })
   }
+
+  saveHandler() {
+    this.setState(
+      {
+        usersList: [...this.state.usersList, this.state.userData],
+        userData: { nombre: "", email: "" }
+      })
+  }
+
   render() {
-    const { title, etapa } = this.state
+
     return (
       <>
-        <input className="control" type="radio" name="etapa" value="siga" onClick={ this.setEtapa }/>
-        <label for="">Siga</label>
-        <input className="control" type="radio" name="etapa" value="precaucion" onClick={ this.setEtapa }/>
-        <label for="">Precaución</label>
-        <input className="control" type="radio" name="etapa" value="alto" onClick={ this.setEtapa }/>
-        <label for="">Alto</label>
-        <div className="semaforo">
-          <p>{ title }</p>
-          <div className={`luz ${etapa}`}></div>
-        </div>
+        <Container fluid>
+          <Row>
+            <Col xs="12" md="3">
+              <DropDown optionsList = {["uno", "dos", "tres"]}/>
+              <Button />
+              <UserForm
+                changeHandler = { this.onChangeHandler }
+                saveHandler = { this.saveHandler }
+                userData = {this.state.userData}
+              />
+            </Col>
+            <Col xs="12" md="9" >
+              {
+                this.state.usersList.length !== 0 &&
+                <UsersTable usersList = { this.state.usersList }/>
+              }
+            </Col>
+          </Row>
+        </Container>
       </>
     )
   }
