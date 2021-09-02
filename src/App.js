@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Form, FormGroup, Input, Label, Button, Table } from 'reactstrap'
+import {
+  Container,
+  Row,
+  Col,
+} from 'reactstrap'
+import UsersForm from './Components/UsersForm'
+
 import UsersTable from './Components/UsersTable'
 
-/*
-  [
-    nombreDelState,
-    funcion que modifica el valor de ese estado
-  ]
-
-  [
-    stateName,
-    ( value ) => { stateName = value }
-  ]
-*/
-
 const App = () => {
-  const [title, setTitle] = useState("Hola koders desde hook")
   const [users, setUsers] = useState()
   const [userData, setUserData] = useState({})
-  /*
-    const title = "Hola koders"
-    const setTitle = ( value ) => {title = value} 
-    */
-
-  const changeHandler = event => {
-    const value = event.target.value
-    console.log(value)
-    setTitle(value)
-  }
+  const [filterResult, setFilterResult ] = useState([])
 
   const userHandler = event => {
     const property = event.target.name
@@ -37,23 +21,37 @@ const App = () => {
   }
 
   const saveUser = () => {
-    !users ? setUsers([ userData]) : setUsers([...users, userData])
+    !users ? setUsers([userData]) : setUsers([...users, userData])
   }
+
+  const filterHandler = event => {
+    const data = users
+    const value = event.target.value
+
+    const result = data.filter( user => user.nombre.toLowerCase().includes( value.toLowerCase()))
+    setFilterResult( result )
+  }
+
   return (
     <>
-      <Form>
-        <FormGroup>
-          <Label>Escribe algún texto</Label>
-          <Input name="nombre" onChange={userHandler} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Escribe algún texto</Label>
-          <Input name="email" onChange={userHandler} />
-        </FormGroup>
-        <Button type="button" onClick={saveUser}>save</Button>
-      </Form>
-      <h1>{title}</h1>
-      { users && <UsersTable usersList = { users }/>}
+      <Container>
+        <Row>
+          <Col xs="12" md="3">
+            <UsersForm 
+              userHandler = { userHandler }
+              saveUser = { saveUser }
+            />
+          </Col>
+          <Col xs="12" md="9">
+            {users && 
+              <UsersTable 
+                usersList={ filterResult.length ? filterResult : users } 
+                filterHandler = { filterHandler }
+              />
+            }
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }

@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'reactstrap'
+import { Table, Input } from 'reactstrap'
 
 const UsersTable = props => {
     const [isShown, setIsShown] = useState()
-    const { usersList } = props
+    const { usersList, filterHandler, filterResult } = props
     const toggle = () => {
-        setIsShown( !isShown )
+        setIsShown(!isShown)
     }
 
-    useEffect( ( ) => {
-        console.log( "yo solo funciono una vez")
-    },[])
+    useEffect(() => {
+        console.log("yo solo funciono una vez")
+    }, [])
 
-    useEffect( () => {
-        console.log( "yo funciono cada que se togglea la tabla")
-    },[isShown])
+    useEffect(() => {
+        console.log("yo funciono cada que se togglea la tabla")
+    }, [isShown])
 
-    useEffect( () => {
-        setIsShown( !isShown )
-        console.log( "yo funciono siempre")
-    },[])
+    useEffect(() => {
+        setIsShown(!isShown)
+        console.log("yo funciono siempre")
+    }, [])
     return (
 
         <>
-            <button type="button" onClick={ toggle }>{ isShown ? "Ocultar": "Mostrar"}</button>
+            <button type="button" onClick={toggle}>{isShown ? "Ocultar" : "Mostrar"}</button>
+            <Input
+                onChange={filterHandler}
+            />
             {
-            isShown &&
-                <Table>
+                isShown &&
+                <Table dark>
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -37,14 +40,16 @@ const UsersTable = props => {
                         {
                             usersList.map((user, index) => {
                                 const { nombre, email } = user
-                                return (<tr>
-                                    <td>{nombre}</td>
-                                    <td>{email}</td>
-                                </tr>)
+                                return (
+                                    <tr key={index}>
+                                        <td>{nombre}</td>
+                                        <td>{email}</td>
+                                    </tr>
+                                )
                             })
+
                         }
                     </tbody>
-
                 </Table>
             }
         </>
