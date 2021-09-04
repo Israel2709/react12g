@@ -1,4 +1,5 @@
 import React from 'react'
+import './style.scss'
 import {
     Card,
     CardBody,
@@ -14,8 +15,8 @@ const ProductCard = props => {
     const { name, price, category } = props.productData
     const { productKey, clickHandler } = props
     return (
-        <Col xs="12" md="3">
-            <Card className="bg-dark text-white">
+        <Col xs="12" md="3" className="mb-3">
+            <Card className="bg-dark text-white product-card">
                 <CardBody >
                     <CardTitle>{name}</CardTitle>
                     <CardText>{category}</CardText>
