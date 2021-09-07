@@ -1,0 +1,12 @@
+@import './Assets/styles/globals.scss';
+
+*{
+    font-family: 'Space Mono', monospace;
+}
+body{
+    background-color: $dark-cyan;
+}
+
+input{
+    color:$dark-cyan !important
+}

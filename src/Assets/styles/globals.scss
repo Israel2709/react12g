@@ -1,0 +1,16 @@
+$strong-cyan:       hsl(172, 67%, 45%);
+$dark-cyan:         hsl(183, 100%, 15%);
+$grayish-cyan:      hsl(186, 14%, 43%);
+$light-cyan:        hsl(189, 41%, 97%);
+
+$font-weights: (
+    "light":400,
+    "regular":500,
+    "bold":700
+);
+
+@each $name, $value in $font-weights{
+    .font-weight-#{$name}{
+        font-weight:$value
+    }
+}
