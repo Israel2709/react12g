@@ -50,31 +50,21 @@ const App = () => {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const linkHandler = event => {
-    const page = event.target.dataset.page
-    setSelectedPage(page)
-  }
+  const links = [
+    {
+      path:"/create-products",
+      text:"Crear productos"
+    },
+    {
+      path:"/product-catalog",
+      text:"Catálogo de productos"
+    },
+    {
+      path:"/shopping-cart",
+      text:"Carrito de compras"
+    },
+  ]
 
-  const setPage = () => {
-    let pageContent
-    switch (selectedPage) {
-      case "createProducts":
-        pageContent = <CreateProducts />
-        break
-
-
-      case "productCatalog":
-        pageContent = <ProductCatalog />
-        break
-
-
-      case "shoppingCart":
-        pageContent = <ShoppingCart />
-        break
-    }
-
-    return pageContent
-  }
 
   return (
     <Router>
@@ -83,30 +73,16 @@ const App = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <NavItem>
-              <Link to="/create-products" className="nav-item">Crear productos</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/product-catalog" className="nav-item">Catálogo de productos</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/shopping-cart" className="nav-item">Carrito de compras</Link>
-            </NavItem>
-            {/*<CustomLink
-              page="createProducts"
-              text="Crear productos"
-              handler={linkHandler}
-            />
-            <CustomLink
-              page="productCatalog"
-              text="Catálogo de productos"
-              handler={linkHandler}
-            />
-            <CustomLink
-              page="shoppingCart"
-              text="Carrito de compras"
-              handler={linkHandler}
-            />*/}
+            {
+              links.map( (link, index ) => {
+                const { path, text } = link
+                return(
+                  <NavItem key={index}>
+                    <Link to={path} className="nav-item">{text}</Link>
+                  </NavItem>
+                )
+              })
+            }
           </Nav>
         </Collapse>
       </Navbar>
